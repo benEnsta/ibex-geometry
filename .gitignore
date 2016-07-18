@@ -4,18 +4,10 @@
 *.o
 *.obj
 
-# Precompiled Headers
-*.gch
-*.pch
-
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
-
-# Fortran module files
-*.mod
-*.smod
 
 # Compiled Static libraries
 *.lai
@@ -27,3 +19,41 @@
 *.exe
 *.out
 *.app
+
+# eclipse settings
+.cproject
+.settings
+.project
+
+# waf generated stuff
+.waf*
+.lock-waf*
+__build__
+flex.pyc
+
+# ibex generated obj
+3rd
+lib
+#include
+share
+bin
+newdoc/_build
+
+# build directory
+build
+build_win
+build_win32
+
+#examples 
+src/wip
+# git conflict files
+
+# qtcreator project
+CMakeLists.txt.user
+
+# hidden sources
+*._cpp
+*._h
+*._py
+*~
+__pycache__
