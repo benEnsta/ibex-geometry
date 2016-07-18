@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/benEnsta/ibex-geometry.svg?branch=master)](https://travis-ci.org/benEnsta/ibex-geometry)
 # ibex-geometry
 An Ibex module with geometrical features
 
