@@ -29,7 +29,8 @@ environment:
 install:
   - cinstall: python
   - ps: (new-object net.webclient).DownloadFile('https://bootstrap.pypa.io/get-pip.py', 'C:/get-pip.py')
-  - "%PYTHON_DIR%/python.exe C:/get-pip.py"
+  - "%PYTHON%/python.exe C:/get-pip.py"
+  - "%PYTHON%\\python.exe -m pip install wheel"
   - ps: >-
       (new-object net.webclient).DownloadFile('https://github.com/benEnsta/ibex-lib/releases/download/ibex-lib-v2.3.51/ibex-lib-2.3.0-win64.zip', 'C:\projects\pyIbex\ibex-lib.zip')
 
@@ -46,7 +47,7 @@ artifacts:
     name: pip_wheel
 
 install:
-  - "%PYTHON%\\python.exe -m pip install wheel"
+
 
 build_script:
   #- echo Running cmake..  .
