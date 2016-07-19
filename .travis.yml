@@ -37,7 +37,7 @@ matrix:
 before_install:
   - if [ $TRAVIS_OS_NAME == osx ]; then brew update && brew install python3; fi
   - if [ $TRAVIS_OS_NAME == osx ]; then pip install --user wheel; fi
-  - if [ $TRAVIS_OS_NAME == osx ]; then brew install clang-omp; fi
+
 
 install:
   - bash ./build_Ibex4pyIbex.sh
@@ -53,7 +53,7 @@ script:
   - ls ${HOME}/ibex
   - ls ${HOME}/ibex/lib
   - if [ $TRAVIS_OS_NAME == osx ]; then
-      CC=clang-omp CXX=clang-omp++ cmake -DCMAKE_INSTALL_PREFIX=${HOME} -DIBEX_ROOT=${HOME}/ibex  ../ ;
+      cmake -DCMAKE_INSTALL_PREFIX=${HOME} -DIBEX_ROOT=${HOME}/ibex  ../ ;
     fi
   - if [ $TRAVIS_OS_NAME == linux ]; then
       cmake -DCMAKE_INSTALL_PREFIX=${HOME} -DIBEX_ROOT=${HOME}/ibex -DCMAKE_CXX_COMPILER=g++-4.8 ../ ;
@@ -62,9 +62,9 @@ script:
 # - export PYTHONPATH=$PYTHONPATH:/home/travis/lib/python${version}/site-packages
   - make test
   #- make pip_package
-  - mv $wheel_file $TRAVIS_BUILD_DIR/$wheel_file
   - cd ..
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX=g++-4.8 CC=gcc-4.8; fi
+  - python setup.py build_ext -I ${HOME}/ibex/include:${HOME}/ibex/include/ibex -L ${HOME}/ibex/lib
   - python setup.py bdist_wheel -d $TRAVIS_BUILD_DIR
   - ls $TRAVIS_BUILD_DIR
   - export wheel_file=$(ls *.whl)

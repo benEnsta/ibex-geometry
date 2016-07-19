@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -x
-# check to see if protobuf folder is empty
+# check to see if ibex folder is empty
 if [ ! -e "$HOME/ibex/lib/libibex.a" ]; then
 	git clone https://github.com/benEnsta/ibex-lib.git
 	cd ibex-lib
