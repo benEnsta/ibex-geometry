@@ -1,6 +1,6 @@
 version: 1.2.{build}
 os: Visual Studio 2015
-clone_folder: C:\projects\pyIbex
+clone_folder: C:\projects\ibex-geometry
 test: off
 configuration:
     - Release

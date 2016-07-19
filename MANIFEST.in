@@ -1,6 +1,0 @@
-include pybind11/include/pybind11/*.h
-include src/polar/*.h
-include src/polygon/*.h
-# include tests/*.py
-include README
-include LICENSE

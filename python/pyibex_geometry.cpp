@@ -54,33 +54,34 @@ PYBIND11_PLUGIN(geometry)
         .def("contract", ( void (ibex::CtcAngle::*) (IntervalVector&) ) &ibex::CtcAngle::contract)
         .def("contract", ( void (ibex::CtcAngle::*) (Interval&, Interval&, Interval&)) &ibex::CtcAngle::contract)
     ;
-
-    // Export CtcPolar
+    //
+    // // Export CtcPolar
     py::class_<ibex::CtcPolar>(m, "CtcPolar", ctc)
         .def(py::init<>())
         .def("contract", ( void (ibex::CtcPolar::*) (IntervalVector&) ) &ibex::CtcPolar::contract)
         .def("contract", ( void (ibex::CtcPolar::*) (Interval&, Interval&, Interval&, Interval&) ) &ibex::CtcPolar::contract)
     ;
-
-    // Export SepPolarXY
+    //
+    // // Export SepPolarXY
     py::class_<ibex::SepPolarXY>(m, "SepPolarXY", sep)
         .def(py::init<Interval, Interval>())
         .def("separate", &ibex::SepPolarXY::separate)
     ;
-
-
-    // Export CtcSegment
+    //
+    //
+    // // Export CtcSegment
     py::class_<ibex::CtcSegment>(m, "CtcSegment", ctc)
         .def(py::init<double, double,double,double>())
         .def("contract", &ibex::CtcSegment::contract)
     ;
-
-    // Export SepPolygon
+    //
+    // // Export SepPolygon
     py::class_<ibex::SepPolygon>(m, "SepPolygon", sep)
       .def("__init__", &SepPolygonFromList)
-      .def("separate", (void (ibex::Sep::*) (IntervalVector&, IntervalVector&)) &ibex::SepPolygon::separate);
-
-
+      .def("separate", (void (ibex::Sep::*) (IntervalVector&, IntervalVector&)) &ibex::SepPolygon::separate)
+    ;
+    //
+    //
     m.def("bwd_angle", &ibex::bwd_angle);
     return m.ptr();
 

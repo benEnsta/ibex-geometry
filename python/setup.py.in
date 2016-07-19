@@ -1,0 +1,33 @@
+from setuptools import setup, Distribution
+import distutils
+from distutils.util import get_platform
+from glob import glob
+# force External module
+class BinaryDistribution(Distribution):
+    def has_ext_modules(self):
+        return True
+
+setup(
+  name='pyibex_geometry',
+  version='${PACKAGE_VERSION}',
+  author='Benoit Desrochers',
+  author_email='ben.ensta@gmail.com',
+  url='https://github.com/benEnsta/ibex-geometry',
+  description='A python interface of ibex-geometry module ',
+  long_description='',
+  ext_modules=[],
+  packages=['pyibex_geometry', 'pyibex_geometry.examples', "pyibex_geometry.tests"],
+  package_data={
+      'pyibex': ['geometry${PYTHON_MODULE_EXTENSION}'],
+
+  },
+  test_suite='pyibex_geometry.tests',
+  license="LGPLv3+",
+  classifiers=[
+      "Development Status :: 3 - Alpha",
+      "Topic :: Scientific/Engineering :: Mathematics",
+      "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+  ],
+  include_package_data=True,
+  zip_safe=False
+)

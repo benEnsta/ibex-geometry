@@ -37,12 +37,16 @@ file(MAKE_DIRECTORY ${HEADERS_DIR})
 include_directories(${HEADERS_DIR})
 add_subdirectory(src)
 
+
+
+
 if (BUILD_TESTS)
 	ENABLE_TESTING()
 	include( CTest )
 	add_subdirectory(tests)
 endif(BUILD_TESTS)
 
+add_subdirectory(python)
 #
 # if (BUILD_EXAMPLE)
 # 	add_subdirectory(examples)
