@@ -8,6 +8,7 @@
 # Created     : Dec 28, 2014
 #============================================================================from pyibex import Interval, IntervalVector
 from pyibex_geometry import *
+from pyibex import Interval
 import unittest
 
 class TestPolar(unittest.TestCase):

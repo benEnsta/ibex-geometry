@@ -4,7 +4,7 @@ file(MAKE_DIRECTORY ${PYTHON_PACKAGE_DIR})
 execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/pyibex_geometry/" "${PYTHON_PACKAGE_DIR}/pyibex_geometry")
 # execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/tests/" "${PYTHON_PACKAGE_DIR}/pyibex/tests")
 
-find_package(pybind11)
+# find_package(pybind11)
 
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in
@@ -45,4 +45,4 @@ add_custom_command(TARGET install_python PRE_BUILD
     WORKING_DIRECTORY ${PYTHON_PACKAGE_DIR}
 )
 
-add_dependencies(install_python pyibex)
+add_dependencies(install_python geometry)

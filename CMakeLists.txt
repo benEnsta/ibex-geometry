@@ -13,6 +13,7 @@ ENDIF()
 
 # option declaration
 option(BUILD_TESTS "Build tests" ON)
+option(WITH_PYTHON "Build python module" ON)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/)
 
@@ -46,7 +47,11 @@ if (BUILD_TESTS)
 	add_subdirectory(tests)
 endif(BUILD_TESTS)
 
-add_subdirectory(python)
+if (WITH_PYTHON)
+	add_subdirectory(pybind11)
+	add_subdirectory(python)
+endif()
+
 #
 # if (BUILD_EXAMPLE)
 # 	add_subdirectory(examples)

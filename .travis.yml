@@ -8,6 +8,7 @@ addons:
     - deadsnakes
     - ubuntu-toolchain-r-test
     - chef-current-precise
+    - kubuntu-backports # cmake 2.8.12
 
     packages:
     - cmake
@@ -25,10 +26,10 @@ matrix:
   include:
   - os: osx
     compiler: clang
-  - os: linux
-    language: python
-    python: "3.4"
-    compiler: gcc-4.8
+  # - os: linux
+    # language: python
+    # python: "3.4"
+    # compiler: gcc-4.8
   - os: linux
     language: python
     python: "3.5"
@@ -37,7 +38,7 @@ matrix:
 before_install:
   - if [ $TRAVIS_OS_NAME == osx ]; then brew update && brew install python3; fi
   - if [ $TRAVIS_OS_NAME == osx ]; then pip install --user wheel; fi
-
+  - pip install --user pyibex
 
 install:
   - bash ./build_Ibex4pyIbex.sh
