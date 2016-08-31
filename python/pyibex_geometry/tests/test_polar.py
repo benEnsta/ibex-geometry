@@ -15,6 +15,9 @@ class TestPolar(unittest.TestCase):
     self.assertTrue(True)
 
 
+  def test_sepPolar(self):
+    	sep = SepPolarXY(Interval(1,2), Interval(0.1, 2.1))
+
 
 if __name__ == '__main__':
 
