@@ -17,7 +17,8 @@
 
 // using namespace std;
 using namespace ibex;
-
+using namespace Catch;
+using namespace Detail;
 
 
 TEST_CASE("test_contract_segment", "")

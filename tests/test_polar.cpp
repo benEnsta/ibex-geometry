@@ -5,7 +5,8 @@
 #include "ibex_CtcAngle.h"
 
 using namespace ibex;
-
+using namespace Catch;
+using namespace Detail;
 
 bool checkbwd_atan2(const Interval& a, const Interval& y_bef, const Interval& x_bef,
 								const Interval& y_aft, const Interval& x_aft) {
