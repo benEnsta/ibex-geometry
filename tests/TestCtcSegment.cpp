@@ -98,3 +98,25 @@ TEST_CASE("test_call_with_all_real", "")
     c.contract(box);
     CHECK(box == resbox);
 }
+
+TEST_CASE("test_successive_calls", "")
+{
+    CtcSegment c(0,0,10,10);
+
+
+    IntervalVector box1(2,Interval::ALL_REALS), resbox1(2,Interval(0,10));
+    c.contract(box1);
+    CHECK(box1 == resbox1);
+
+
+
+    IntervalVector box2(2,Interval(-20,-10)), resbox2(2,Interval::EMPTY_SET);
+    c.contract(box2);
+    CHECK(box2 == resbox2);
+
+
+
+    IntervalVector box3(2,Interval::ALL_REALS), resbox3(2,Interval(0,10));
+    c.contract(box3);
+    CHECK(box3 == resbox3);
+}

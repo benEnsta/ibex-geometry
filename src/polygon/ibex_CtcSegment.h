@@ -58,7 +58,7 @@ public:
 protected:
 	/** Box which contains the box to be contracted and the segment parameters.
 	 * Only used when the segment is fixed.*/
-	IntervalVector X_with_params;
+    IntervalVector X_with_params;
 
 	/** Constraint used by the contractor : the point must belong the the line and
     	to the box which encloses the segment */
