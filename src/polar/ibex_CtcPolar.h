@@ -51,6 +51,10 @@ public:
   void contract(Interval &x, Interval& y, Interval& rho, Interval& theta);
 
   /**
+   * \bref return polar coordinate from cartesion
+   */
+  IntervalVector RTfromXY(Interval x, Interval y);
+  /**
    * \brief Delete this.
    */
   ~CtcPolar();

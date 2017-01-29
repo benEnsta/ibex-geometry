@@ -53,6 +53,9 @@ public:
 protected:
 };
 
+
+inline bool bwd_angle()
+
 inline bool bwd_angle(const Interval& theta, Interval& y, Interval& x) {
 
   if (theta.is_empty()) {

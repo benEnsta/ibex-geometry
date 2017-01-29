@@ -30,7 +30,8 @@ void _contract(Interval &x, Interval& y,
   Interval a2 = sqr(y);
   Interval a3 = a1 + a2;
   Interval a4 = sqr(rho);
-  // a4 &= a3;
+
+  a4 &= a3;
   a3 &= a4;
 
   bwd_sqr(a4, rho);
@@ -50,9 +51,21 @@ void _contract(Interval &x, Interval& y,
 
 void CtcPolar::contract(Interval &x, Interval& y,
                         Interval& rho, Interval& theta){
+  // std::cout << rho << " -- " ;
   _contract(x,y,rho, theta);
   _contract(x,y,rho, theta);
+  // std::cout << rho << "\n";
 
+}
+
+IntervalVector CtcPolar::RTfromXY(Interval x, Interval y){
+
+  Interval rho(0, 1e10);
+  Interval theta(-0.99*M_PI, M_PI);
+  contract(x, y, rho, theta);
+  IntervalVector res(2);
+  res[0] = rho; res[1] = theta;
+  return res;
 }
 
 
