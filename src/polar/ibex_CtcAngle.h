@@ -13,7 +13,7 @@
 
 #include "ibex_IntervalVector.h"
 #include "ibex_Ctc.h"
-
+#include <tuple>
 using namespace std;
 
 namespace ibex {
@@ -53,8 +53,89 @@ public:
 protected:
 };
 
+inline Interval Cmod(const Interval& x, const Interval& y){
+  Interval xx(x);
+  Interval yy(y);
+  bwd_imod(xx,yy,2*0x1.921fb54442d18p+1);
+  return yy;
+}
 
-inline bool bwd_angle()
+inline Interval Cmod_bwd(const Interval& x, const Interval& y){
+  Interval xx(x);
+  Interval yy(y);
+  bwd_imod(xx,yy,2*0x1.921fb54442d18p+1);
+  return xx;
+}
+
+
+
+inline std::tuple<Interval, Interval, Interval> Catan2(const Interval&x, const Interval&y, const Interval& th){
+  static const Interval iZeroPi2 = Interval(0) | (Interval::PI/2.);
+  static const Interval iPi2Pi = (Interval::PI/2.) | Interval::PI;
+  const double ITV2PI = 2*Interval::PI.ub();
+  // static const Interval 2PI_UB = 2*Interval::PI.ub();
+  if (x.is_empty() || y.is_empty() || th.is_empty()) {
+      return std::make_tuple(Interval::EMPTY_SET, Interval::EMPTY_SET, Interval::EMPTY_SET);
+  }
+  if ( x.is_subset(Interval::POS_REALS) && y.is_subset(Interval::POS_REALS) && th.is_subset(iZeroPi2) ) {
+
+    Interval th_tmp = Cmod(th, iZeroPi2);
+
+    // trick to keep tan(th) > 0 because we only consider x >= 0 and y>= 0
+    Interval tan_lb = tan(Interval(th_tmp.lb()));
+    Interval tan_ub = (th_tmp.ub() == Interval::HALF_PI.ub()) ? 1e10  : tan(Interval(th_tmp.ub()));
+    Interval tanTh = tan_lb | tan_ub;
+
+    Interval xx = x & y/tanTh;
+    Interval yy = y & x*tanTh;
+    Interval thr = th_tmp & atan(y/x);
+
+    if (xx.is_empty() or yy.is_empty() or thr.is_empty() ){
+      return std::make_tuple(Interval::EMPTY_SET, Interval::EMPTY_SET, Interval::EMPTY_SET);
+    }
+
+    return std::make_tuple(xx, yy, thr);
+  }
+
+  // Divide into four quadrats  and call contractor
+  //  x > 0 and y > 0 and th \in [0, PI/2.]
+  Interval x1 = x & Interval::POS_REALS;
+  Interval y1 = y & Interval::POS_REALS;
+  Interval th1 = Cmod(th,iZeroPi2);
+  std::tie(x1, y1, th1) = Catan2(x1, y1, th1);
+  Interval th11 = Cmod_bwd(th, th1);
+  // bwd_imod(th11, th1, ITV2PI);
+
+  // x > 0, y < 0 , th \in [-PI/2., 0]
+  Interval x2 = x & Interval::POS_REALS;
+  Interval y2 = y & Interval::NEG_REALS;
+  Interval th2 = -Cmod(th, -iZeroPi2);
+  std::tie(x2, y2, th2) = Catan2(x2, -y2, th2);
+  Interval th22 = Cmod_bwd(th, -th2);
+  // bwd_imod(th22, -th2, ITV2PI);
+
+  // x < 0, y < 0 , th \in [-PI, -PI/2.]
+  Interval x3 = x & Interval::NEG_REALS;
+  Interval y3 = y & Interval::NEG_REALS;
+  Interval th3 = Interval::PI + Cmod(th, -iPi2Pi);
+  std::tie(x3, y3, th3) = Catan2(-x3, -y3, (th3 &  iZeroPi2) );
+  Interval th33 = Cmod_bwd(th, th3 - Interval::PI);
+  // bwd_imod(th33, th3 - Interval::PI, ITV2PI);
+
+  // x < 0, y > 0 , th \in [PI/2., PI]
+  Interval x4 = x & Interval::NEG_REALS;
+  Interval y4 = y & Interval::POS_REALS;
+  Interval th4 = Interval::PI - Cmod( th,iPi2Pi);
+  std::tie(x4, y4, th4) = Catan2(-x4, y4, ( th4 & iZeroPi2) );
+  Interval th44 = Cmod_bwd(th, Interval::PI -  th4);
+  // bwd_imod(th44, Interval::PI -  th4, ITV2PI);
+
+  Interval xx =   ( x1 | x2 | (-x3) | (-x4) );
+  Interval yy =   ( y1 | (-y2) | (-y3) | (y4) );
+  Interval thh =  ( th11 | (th22) | ( th33 ) | ( th44 ) );
+  return std::make_tuple(xx,yy,thh);
+
+}
 
 inline bool bwd_angle(const Interval& theta, Interval& y, Interval& x) {
 

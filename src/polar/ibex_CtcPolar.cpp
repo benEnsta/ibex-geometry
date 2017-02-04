@@ -19,11 +19,13 @@ CtcPolar::~CtcPolar() {}
 
 void _contract(Interval &x, Interval& y,
                         Interval& rho, Interval& theta){
-  const double d2PI   = (2*Interval::PI).ub();
+  // const double d2PI   = (2*Interval::PI).ub();
 
-  Interval theta_tmp = atan2(y, x);
-  bwd_imod(theta_tmp, theta, d2PI);
-  bwd_angle(theta, y, x);
+  // Interval theta_tmp = atan2(y, x);
+  // bwd_imod(theta_tmp, theta, d2PI);
+  // bwd_angle(theta, y, x);
+
+  std::tie(x,   y, theta) = Catan2(x, y, theta);
 
 
   Interval a1 = sqr(x);

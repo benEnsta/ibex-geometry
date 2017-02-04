@@ -18,6 +18,7 @@ option(WITH_PYTHON "Build python module" ON)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/)
 
 
+
 if(NOT WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC"  )
 	set(IbexLib_USE_STATIC 1)

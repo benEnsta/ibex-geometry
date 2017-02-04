@@ -86,6 +86,9 @@ PYBIND11_PLUGIN(geometry)
     //
     //
     m.def("bwd_angle", &ibex::bwd_angle);
+    m.def("Catan2", &ibex::Catan2);
+    m.def("Cmod", &ibex::Cmod);
+    m.def("Cmod_bwd", &ibex::Cmod_bwd);
     return m.ptr();
 
 }
