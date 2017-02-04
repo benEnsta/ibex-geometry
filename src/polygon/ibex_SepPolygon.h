@@ -74,11 +74,26 @@ public:
      * This contractor is minimal as an union of minimal contractors.
      * See #ibex::SepBoundaryCtc.
      *
+     * \param points list of segments representing the edges of the polygon in the format of ( ((a1_x, a1_y), (b1_x, b1_x)), ((a2_x, a2_y), (b2_x, b2_x)), ...)
+     */
+    SepPolygon(std::vector< std::vector< std::vector<double> > >& points);
+
+    /**
+     * Create a Separator with the polygon passed as argument.
+     *
+     * A polygon is defined as an union of segments given in a counter-clockwise order.
+     * See unit test for an example of usage
+     *
+     * The polygon boundary contractor is composed of a union of
+     * contractor on segments (CtcSegment).
+     * This contractor is minimal as an union of minimal contractors.
+     * See #ibex::SepBoundaryCtc.
+     *
      * \param ax list of x coordinate of the first point of each segment
      * \param ay list of y coordinate of the first point of each segment
      * \param bx list of x coordinate of the second point of each segment
      * \param by list of y coordinate of the second point of each segment
-	 */
+     */
     SepPolygon(std::vector<double>& ax, std::vector<double>& ay, std::vector<double>& bx, std::vector<double>& by);
 
 	/**

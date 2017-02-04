@@ -52,8 +52,18 @@ namespace ibex {
 class PdcInPolygon : public Pdc {
 public:
 
-	/**
-	 * \brief Create the predicate with the list of segments passed as argument.
+    /**
+     * \brief Create the predicate with the list of segments passed as argument.
+     *
+     * A polygon is defined as an union of segments given in a counter-clockwise order.
+     * See the documentation for an example of usage.
+     *
+     * \param points list of segments representing the edges of the polygon in the format of ( ((a1_x, a1_y), (b1_x, b1_x)), ((a2_x, a2_y), (b2_x, b2_x)), ...)
+     */
+    PdcInPolygon(std::vector< std::vector< std::vector<double> > >& points);
+
+    /**
+     * \brief Create the predicate with the list of segments passed as argument.
      *
      * A polygon is defined as an union of segments given in a counter-clockwise order.
      * See the documentation for an example of usage.
@@ -62,8 +72,8 @@ public:
      * \param ay list of y coordinate of the first point of each segment
      * \param bx list of x coordinate of the second point of each segment
      * \param by list of y coordinate of the second point of each segment
-	 */
-	PdcInPolygon(std::vector<double>& ax, std::vector<double>& ay, std::vector<double>& bx, std::vector<double>& by);
+     */
+    PdcInPolygon(std::vector<double>& ax, std::vector<double>& ay, std::vector<double>& bx, std::vector<double>& by);
 
 	/**
 	 * \brief Test the box.
@@ -74,7 +84,7 @@ protected:
     /**
      * Definition of the segment of the polygon
      */
-		std::vector<double> ax;
+    std::vector<double> ax;
     std::vector<double> ay;
     std::vector<double> bx;
     std::vector<double> by;

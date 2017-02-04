@@ -24,21 +24,36 @@ namespace {
 
 
 Array<Ctc> segment_ctc_list(vector<double>& ax, vector<double>& ay, vector<double>& bx, vector<double>& by) {
-	Array<Ctc> l(ax.size());
+    Array<Ctc> l(ax.size());
 
-	for(unsigned int i=0; i<ax.size(); i++) {
-		l.set_ref(i, *new CtcSegment(ax[i],ay[i],bx[i],by[i]));
-	}
-	return l;
+    for(unsigned int i=0; i<ax.size(); i++) {
+        l.set_ref(i, *new CtcSegment(ax[i],ay[i],bx[i],by[i]));
+    }
+    return l;
+}
+
+Array<Ctc> segment_ctc_list(vector< vector< vector<double> > > points) {
+    Array<Ctc> l(points.size());
+
+    for(unsigned int i=0; i<points.size(); i++) {
+        l.set_ref(i, *new CtcSegment(points[i][0][0],points[i][0][1],points[i][1][0],points[i][1][1]));
+    }
+    return l;
 }
 
 } // end anonymous namespace
 
 namespace ibex {
 
+SepPolygon::SepPolygon(vector< vector< vector<double> > > &points) :
+            SepBoundaryCtc(*new CtcUnion(segment_ctc_list(points)),
+                           *new PdcInPolygon(points)) {
+
+}
+
 SepPolygon::SepPolygon(vector<double> &_ax, vector<double> &_ay, vector<double> &_bx, vector<double> &_by) :
-    		SepBoundaryCtc(*new CtcUnion(segment_ctc_list(_ax,_ay, _bx, _by)),
-    				       *new PdcInPolygon(_ax,_ay,_bx,_by)) {
+            SepBoundaryCtc(*new CtcUnion(segment_ctc_list(_ax,_ay, _bx, _by)),
+                           *new PdcInPolygon(_ax,_ay,_bx,_by)) {
 
 }
 

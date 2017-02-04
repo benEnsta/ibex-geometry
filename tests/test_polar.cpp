@@ -31,8 +31,6 @@ TEST_CASE("bwd_atan2_01", "") {
 												Interval(.5,2),
 												Interval(0.5,2*sqrt(3.)),
 												Interval(0.5,2.)
-
-
 	);
 }
 TEST_CASE( "bwd_atan2_02" , "") {
