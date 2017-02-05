@@ -11,7 +11,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "catch_interval.hpp"
-#include "vibes/vibes.h"
+// #include "vibes/vibes.h"
 
 #include "ibex_SepPolygon.h"
 
@@ -66,7 +66,7 @@ public:
     }
 
     // Plot the box with Vibes
-    vibes::drawBox(box[0].lb(), box[0].ub(), box[1].lb(), box[1].ub(), color);
+    // vibes::drawBox(box[0].lb(), box[0].ub(), box[1].lb(), box[1].ub(), color);
   }
 
 };
@@ -186,15 +186,15 @@ TEST_CASE("test_SepPolygon_04", "")
     CHECK(box_in == resbox);
     CHECK(box_out == IntervalVector(2,Interval::EMPTY_SET));
 
-    vibes::beginDrawing();
-    vibes::newFigure("test_SepPolygon_04");
-    vibes::setFigureProperties(vibesParams("x",106,"y",60,"width",800,"height",450));
-
-    vibes::drawBox(box_out,"k[r]");
-    vibes::drawBox(box_in,"k[c]");
-
-    for(int i =0; i< lines.size(); i++)
-        vibes::drawLine(lines[i],"k");
+    // vibes::beginDrawing();
+    // vibes::newFigure("test_SepPolygon_04");
+    // vibes::setFigureProperties(vibesParams("x",106,"y",60,"width",800,"height",450));
+    //
+    // vibes::drawBox(box_out,"k[r]");
+    // vibes::drawBox(box_in,"k[c]");
+    //
+    // for(int i =0; i< lines.size(); i++)
+    //     vibes::drawLine(lines[i],"k");
 }
 
 //Test the outter contractor
@@ -225,15 +225,15 @@ TEST_CASE("test_SepPolygon_05", "")
     CHECK(box_in == IntervalVector(2,Interval::EMPTY_SET));
     CHECK(box_out == resbox);
 
-    vibes::beginDrawing();
-    vibes::newFigure("test_SepPolygon_05");
-    vibes::setFigureProperties(vibesParams("x",1013,"y",60,"width",800,"height",450));
-
-    vibes::drawBox(box_out,"k[r]");
-    vibes::drawBox(box_in,"k[c]");
-
-    for(int i =0; i< lines.size(); i++)
-        vibes::drawLine(lines[i],"k");
+    // vibes::beginDrawing();
+    // vibes::newFigure("test_SepPolygon_05");
+    // vibes::setFigureProperties(vibesParams("x",1013,"y",60,"width",800,"height",450));
+    //
+    // vibes::drawBox(box_out,"k[r]");
+    // vibes::drawBox(box_in,"k[c]");
+    //
+    // for(int i =0; i< lines.size(); i++)
+    //     vibes::drawLine(lines[i],"k");
 }
 
 //Test the paving
@@ -259,13 +259,15 @@ TEST_CASE("test_SepPolygon_06", "")
 
     sep.contract(set,0.2);
 
-    vibes::beginDrawing();
-    vibes::newFigure("test_SepPolygon_06");
-    vibes::setFigureProperties(vibesParams("x",106,"y",570,"width",800,"height",450));
-    ToVibes drawVibes;
-    set.visit(drawVibes);
-    for(int i =0; i< lines.size(); i++)
-        vibes::drawLine(lines[i],"k");
+
+
+    // vibes::beginDrawing();
+    // vibes::newFigure("test_SepPolygon_06");
+    // vibes::setFigureProperties(vibesParams("x",106,"y",570,"width",800,"height",450));
+    // ToVibes drawVibes;
+    // set.visit(drawVibes);
+    // for(int i =0; i< lines.size(); i++)
+    //     vibes::drawLine(lines[i],"k");
 
 
     char *tmpname = tmpnam(NULL);
@@ -309,17 +311,17 @@ TEST_CASE("test_SepPolygon_07", "")
 
     sep.contract(set,0.2);
 
-    vibes::beginDrawing();
-    vibes::newFigure("test_SepPolygon_07");
-    vibes::setFigureProperties(vibesParams("x",1013,"y",570,"width",800,"height",450));
-    ToVibes drawVibes;
-    set.visit(drawVibes);
-
-    for(int i =0; i< lines.size(); i++)
-        vibes::drawLine(lines[i],"k");
-
-    for(int i =0; i< innerPolygon.size(); i++)
-        vibes::drawLine(innerPolygon[i],"k");
+    // vibes::beginDrawing();
+    // vibes::newFigure("test_SepPolygon_07");
+    // vibes::setFigureProperties(vibesParams("x",1013,"y",570,"width",800,"height",450));
+    // ToVibes drawVibes;
+    // set.visit(drawVibes);
+    //
+    // for(int i =0; i< lines.size(); i++)
+    //     vibes::drawLine(lines[i],"k");
+    //
+    // for(int i =0; i< innerPolygon.size(); i++)
+    //     vibes::drawLine(innerPolygon[i],"k");
 
 
     char *tmpname = tmpnam(NULL);
