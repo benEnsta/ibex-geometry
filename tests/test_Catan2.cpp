@@ -9,10 +9,11 @@
 // ============================================================================
 
 #define CATCH_CONFIG_MAIN
+#include "ibex_CtcAngle.h"
 #include "catch.hpp"
 #include "catch_interval.hpp"
 
-#include "ibex_CtcAngle.h"
+
 
 using namespace ibex;
 using namespace Catch;
