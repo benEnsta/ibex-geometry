@@ -53,7 +53,8 @@ build_script:
   - set MSBuildLogger="C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - set MSBuildOptions=/v:m /p:Configuration=%Configuration% /logger:%MSBuildLogger%
   - cmake -G "%CMAKE_PLATFORM%"  -DWITH_PYTHON=OFF -DIBEX_ROOT=C:\projects\pyIbex\ibex-lib\ibex-lib-"%IBEX_FILES%" ..
-  - cmake --build .
+  - msbuild %MSBuildOptions% ibex-geometry.vcxproj
+  - ctest -C %Configuration%
   # - git clone -b build_process https://github.com/benEnsta/ibex-robotics.git ibex-robotics
   #- cmake -G "%CMAKE_PLATFORM%" -DPYTHON_INCLUDE_DIR:PATH=%PYTHON_DIR%/include -DPYTHON_LIBRARY:FILEPATH=%PYTHON_DIR%/libs/python34.lib -DPYTHON_EXECUTABLE:FILEPATH=%PYTHON_DIR%/python.exe -DIBEX_ROOT=C:\projects\ibex-geometry\ibex-lib\ibex-lib-2.3.0-win64
   #- set MSBuildLogger="C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
@@ -61,7 +62,7 @@ build_script:
   #- msbuild %MSBuildOptions% INSTALL.vcxproj
   #- ctest -C %Configuration%
   #- msbuild %MSBuildOptions% src/pip_package.vcxproj
-  - "build.cmd %PYTHON%\\python.exe setup.py build_ext -I C:\\projects\\ibex-geometry\\ibex-lib\\ibex-lib-2.3.0-win64\\include:C:\\projects\\ibex-geometry\\ibex-lib\\ibex-lib-2.3.0-win64\\include\\ibex -L C:\\projects\\ibex-geometry\\ibex-lib\\ibex-lib-2.3.0-win64\\lib"
+  # - "build.cmd %PYTHON%\\python.exe setup.py build_ext -I C:\\projects\\ibex-geometry\\ibex-lib\\ibex-lib-2.3.0-win64\\include:C:\\projects\\ibex-geometry\\ibex-lib\\ibex-lib-2.3.0-win64\\include\\ibex -L C:\\projects\\ibex-geometry\\ibex-lib\\ibex-lib-2.3.0-win64\\lib"
 
 test_script:
   # Put your test command here.
