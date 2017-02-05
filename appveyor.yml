@@ -22,7 +22,7 @@ environment:
       PYTHON_EXE: "C:\\Python34-x64/python.exe"
       IBEX_FILES: "2.3.0-win64"
 install:
-  - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
+  # - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
   # - cinstall: python
   # - ps: (new-object net.webclient).DownloadFile('https://bootstrap.pypa.io/get-pip.py', 'C:/get-pip.py')
   # - "%PYTHON_DIR%/python.exe C:/get-pip.py"
