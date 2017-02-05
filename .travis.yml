@@ -60,7 +60,7 @@ script:
     fi
   - make && make install
 # - export PYTHONPATH=$PYTHONPATH:/home/travis/lib/python${version}/site-packages
-  - make test
+  - make test ARGS="-VV"
   #- make pip_package
   # - cd ..
 #   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX=g++-4.8 CC=gcc-4.8; fi
