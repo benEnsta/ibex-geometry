@@ -8,7 +8,7 @@ elseif(COMPILER_SUPPORTS_CXX0X)
 else()
         message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
-  
+
 
 include_directories(catch)
 include_directories(vibes)
@@ -27,3 +27,7 @@ configure_file(setResult_07 setResult_07 COPYONLY)
 ADD_EXECUTABLE(test_SepPolygon test_SepPolygon.cpp)
 target_link_libraries(test_SepPolygon ${LIBS} ibex-geometry )
 ADD_TEST(test_SepPolygon test_SepPolygon)
+
+ADD_EXECUTABLE(test_Catan2 test_Catan2.cpp)
+target_link_libraries(test_Catan2 ${LIBS} ibex-geometry )
+ADD_TEST(test_Catan2 test_Catan2)

@@ -70,8 +70,8 @@ inline Interval Cmod_bwd(const Interval& x, const Interval& y){
 
 
 inline std::tuple<Interval, Interval, Interval> Catan2(const Interval&x, const Interval&y, const Interval& th){
-  static const Interval iZeroPi2 = Interval(0) | (Interval::PI/2.);
-  static const Interval iPi2Pi = (Interval::PI/2.) | Interval::PI;
+  static const Interval iZeroPi2 = Interval(0) | (Interval::HALF_PI);
+  static const Interval iPi2Pi = (Interval::HALF_PI) | Interval::PI;
   const double ITV2PI = 2*Interval::PI.ub();
   // static const Interval 2PI_UB = 2*Interval::PI.ub();
   if (x.is_empty() || y.is_empty() || th.is_empty()) {
@@ -79,17 +79,24 @@ inline std::tuple<Interval, Interval, Interval> Catan2(const Interval&x, const I
   }
   if ( x.is_subset(Interval::POS_REALS) && y.is_subset(Interval::POS_REALS) && th.is_subset(iZeroPi2) ) {
 
+    if (x == Interval::ZERO && y == Interval::ZERO){
+      return std::make_tuple(Interval::EMPTY_SET, Interval::EMPTY_SET, Interval::EMPTY_SET);
+    }
+
     Interval th_tmp = Cmod(th, iZeroPi2);
 
     // trick to keep tan(th) > 0 because we only consider x >= 0 and y>= 0
     Interval tan_lb = tan(Interval(th_tmp.lb()));
-    Interval tan_ub = (th_tmp.ub() == Interval::HALF_PI.ub()) ? 1e10  : tan(Interval(th_tmp.ub()));
+    Interval tan_ub = (th_tmp.ub() == Interval::HALF_PI.ub()) ? Interval(std::numeric_limits<double>::max(), POS_INFINITY)  : tan(Interval(th_tmp.ub()));
     Interval tanTh = tan_lb | tan_ub;
+    // Interval tanTh = tan(th_tmp) & Interval(0, POS_INFINITY);
 
     Interval xx = x & y/tanTh;
-    Interval yy = y & x*tanTh;
-    Interval thr = th_tmp & atan(y/x);
-
+    Interval yy = ( x != Interval::ZERO) ? y & x*tanTh : y;
+    Interval thr =  th_tmp & ( ( x != Interval::ZERO ) ? atan(y/x) : Interval::HALF_PI );
+    // cout << "XX " << xx << " " << tanTh << y/tanTh << "\n";
+    // cout << "YY " << yy << " " << tanTh << x*tanTh << "\n";
+    // cout << "TH " << th << " " <<  thr << " " << th_tmp << atan(y/x) << "\n";
     if (xx.is_empty() or yy.is_empty() or thr.is_empty() ){
       return std::make_tuple(Interval::EMPTY_SET, Interval::EMPTY_SET, Interval::EMPTY_SET);
     }
