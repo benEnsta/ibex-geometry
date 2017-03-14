@@ -33,8 +33,8 @@ Interval.__repr__ = print3
 class TestCatan2(unittest.TestCase):
 
     def assertSubset(self, x, x_ref):
-        return self.assertEqual(x, x_ref)
-        # return x.is_subset(x_ref)
+        # return self.assertEqual(x, x_ref)
+        return x.is_subset(x_ref)
 
     def assertAlmostItvEqual(self, x, y):
         # self.assertAlmostEqual(x.lb(), y.lb())
