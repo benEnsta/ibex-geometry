@@ -62,8 +62,8 @@ void CtcPolar::contract(Interval &x, Interval& y,
 
 IntervalVector CtcPolar::RTfromXY(Interval x, Interval y){
 
-  Interval rho(0, 1e10);
-  Interval theta(-0.99*M_PI, M_PI);
+  Interval rho(0, POS_INFINITY);
+  Interval theta(-Interval::PI.lb(), Interval::PI.lb());
   contract(x, y, rho, theta);
   IntervalVector res(2);
   res[0] = rho; res[1] = theta;

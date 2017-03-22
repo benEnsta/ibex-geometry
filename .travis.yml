@@ -117,7 +117,7 @@ script:
   - ls ${HOME}/ibex/lib
 
   - cmake -DCMAKE_INSTALL_PREFIX=${HOME} -DIBEX_ROOT=${HOME}/ibex -DPYTHON_VERSION=${version} -DPYBIND11_PYTHON_VERSION=$PYTHON -DPYBIND11_CPP_STANDARD=$CPP ../ ;
-  - make && make install
+  - make
 
   - make test
   - make pip_package
