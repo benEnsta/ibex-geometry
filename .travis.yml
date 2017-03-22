@@ -47,9 +47,10 @@ matrix:
     env: PYTHON=3.5 CPP=14 CLANG
 env:
   global:
-  - secure: QMtC7zYxU4pPwZrQ4OX2bjgPoei+2PYZPxuTOGewgI11HlbM7xFbryhloHeIeoeKXjKgUhCSY32lUiAP4NlT1ZkQVVr30m7FF+6hZkw6/bFvernOdr9kAd99Hg3uiunHCKoce7tTkIpo/eLTGAmr1Vbcc0FTZNagAWZmNClGOIw=
-  - secure: cKkW9x5L4KFuq3bzb9uCsYSiXo/V55m96Ua122Wo7J5BfiagJqXoPc8PcWwx/qgLrCiT2xzW4fTp1DFDq97LsaXxEp/TWvzI+zPhB4tfUDzF95Dbvkl7A+sgmmSYkBiD146WP4KjmMGEv65RzIS9nFaRikF1X790Sxy/pEAhjLY=
-
+  # - secure: QMtC7zYxU4pPwZrQ4OX2bjgPoei+2PYZPxuTOGewgI11HlbM7xFbryhloHeIeoeKXjKgUhCSY32lUiAP4NlT1ZkQVVr30m7FF+6hZkw6/bFvernOdr9kAd99Hg3uiunHCKoce7tTkIpo/eLTGAmr1Vbcc0FTZNagAWZmNClGOIw=
+  # - secure: cKkW9x5L4KFuq3bzb9uCsYSiXo/V55m96Ua122Wo7J5BfiagJqXoPc8PcWwx/qgLrCiT2xzW4fTp1DFDq97LsaXxEp/TWvzI+zPhB4tfUDzF95Dbvkl7A+sgmmSYkBiD146WP4KjmMGEv65RzIS9nFaRikF1X790Sxy/pEAhjLY=
+  - secure: DtbWE3aMH2wQTUm0goCGjmvX0UbKZWifyOlcEw0Wi3zTXboIFM84SZ6lWOnYKwOgA1gC/A94lwRdv6LTkLS/Kysj1PXYQl/qEr+1R2QllAQV3vSOGAU0jNW6DQOYeHNUqAGttRD53yiKpyrTXDfBQNEXxoOdpSjWVehrIXu8PToitM8Z67cEP4C/wafARhnSsXvjZTr48fZxrjwb6Tz2sWZ6HgdOWWwdl9+G0Fsf5ghfElAroW8zjOvMyU++ZfIdt9l+z2HzMSNl2ZhzhhRqiLovwxYrMypX0gZv4XUDNaIvEsWOCZsHyvBh4ccdLm/QDfP3R6YcUL1Lfxr+4FOR170ZGDMPwUGLJvNYA2audahzAWHsc61/ApycturU7aX1i2vR+MvywjV6OHTnsDxIoDLyu96jMAaVvOwfUI1Zk0vQWssuiA4rXpf4heCUFc5DZ7Xla0dUMX5ObfuSN1jOgbZJJAEnCxAiXOKUsnhhBPXzck69b6jjnHtXIhykzlD2BtNl0FKseT9ymQsW7zvBxUIzhU3h2NHdRHML73/0mdGPUfmBeTNNDSjF5nC2KECJ7LEBOYcmoGH2/UR5VlZwtSXwBwO9ikod3qkpmQ1VzJO6AFgtQl7U2VcKEna5oeHyqel4w0SQs2dwNzz5ETULp4T/ffO2er1sp3788yU3n+8=
+  - secure: Wt1dAalRKv2B7ewmrtgxF5QngTB77jR+Q3kUVQuBkG5nL/+bK/h6bLjSbUVuR1tEu+T+M9+ClPq3PmHeZC7mbBAuwVEQB418+HGviVFy3W84ZgVYNAwrYRB1zfnkUaFoIwcOM4XUUU31aAr49RlS8Sl0DPWNDe31HCekiJpHu8xJuPVpRTlRtFjuRndBz6EvYUUwn4RhxvB6IPtxIzhiE22FnEFr3h2y4koEWygvmHha0PNEpReHqepzakFLoVDs6G4Q71MMmUcgOfVu9CV05Rzk9Pidtf2Mdiy2LnfDEckOeigMYPaEY59uWcFc+g9ZIxeOncYcL6mJ4TDCKIDCXhEMei3IaOXujs+PQ+9eG1hpM2PavKDHNTVadyaAKm+BDsgUvCDcuwkcocQWejKRb90vGGGUnQYFAutuManHcOI8Thiyp5xzM5Vtf/Q1g3QIStq46/WuHP/XxQYmfWLSrLPBmXP8WzWe0VQ4K/uGRXy3kGgDhyLFxfjPnhdPqtK0dK6q6qZDmM7BGlZVjiSwFTDyzEl7J951+0Jh8PRrxSrU3bJXjMCg5vcIqAKhHm24NtVBrpjIYvCk0vSDzFezXeFUPM4E0SIQHnPPo2Lk6GqirsJNGCHIjdnF4PFbbTxD4IdCmUBsMc0DhTmwn8IemPu1wfRP3N/euFFsl5pZNlg=
 cache:
   directories:
   - $HOME/ibex
@@ -73,7 +74,7 @@ before_install:
   # - if [ $TRAVIS_OS_NAME == osx ]; then brew update && brew install python3; fi
   # - if [ $TRAVIS_OS_NAME == osx ]; then pip install --user wheel twine; fi
 #  - if [ $TRAVIS_OS_NAME == osx ]; then brew install clang-omp; fi
-  - bash ./travis_script/build_Ibex4pyIbex.sh
+  - bash ./build_Ibex4pyIbex.sh
   - export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$HOME/ibex
   - |
     # Configure build variables

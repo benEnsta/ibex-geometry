@@ -1,6 +1,6 @@
-version: 1.2.{build}
+version: 1.5.{build}
 os: Visual Studio 2015
-clone_folder: C:\projects\ibex-geometry
+clone_folder: C:\projects\pyIbex
 test: off
 configuration:
     - Release
@@ -17,95 +17,84 @@ environment:
       PYTHON_DIR: "C:\\Python34"
       PYTHON_EXE: "C:\\Python34/python.exe"
       IBEX_FILES: "2.3.0-win32"
+    - CMAKE_PLATFORM: "Visual Studio 14 2015"
+      PYTHON_DIR: "C:\\Python35"
+      PYTHON_EXE: "C:\\Python35/python.exe"
+      IBEX_FILES: "2.3.0-win32"
     - CMAKE_PLATFORM: "Visual Studio 14 2015 Win64"
       PYTHON_DIR: "C:\\Python34-x64"
       PYTHON_EXE: "C:\\Python34-x64/python.exe"
       IBEX_FILES: "2.3.0-win64"
+    - CMAKE_PLATFORM: "Visual Studio 14 2015 Win64"
+      PYTHON_DIR: "C:\\Python35-x64"
+      PYTHON_EXE: "C:\\Python35-x64/python.exe"
+      IBEX_FILES: "2.3.0-win64"
+
+  USERNAME:
+    secure: x/KrtKQDdjxKhvPlvfdiMQ==
+  PASWORD:
+    secure: C5uWvbl1OHCVoprbRYTGD7LLzuUMtj18MtxytCqLmh8=
+  FTP_PASSWD:
+    secure: U58Tazcrcj6n+oP1CxfRCQ==
+
 install:
-  # - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
-  # - cinstall: python
-  # - ps: (new-object net.webclient).DownloadFile('https://bootstrap.pypa.io/get-pip.py', 'C:/get-pip.py')
-  # - "%PYTHON_DIR%/python.exe C:/get-pip.py"
+  - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
+  - cinstall: python
+  - ps: (new-object net.webclient).DownloadFile('https://bootstrap.pypa.io/get-pip.py', 'C:/get-pip.py')
+  - "%PYTHON_DIR%/python.exe C:/get-pip.py"
   - ps: >-
 
-      (new-object net.webclient).DownloadFile("https://github.com/benEnsta/ibex-lib/releases/download/ibex-lib-v2.3.57/ibex-lib-$env:IBEX_FILES.zip", 'C:\projects\ibex-geometry\ibex-lib.zip')
+      (new-object net.webclient).DownloadFile("https://github.com/benEnsta/ibex-lib/releases/download/ibex-lib-v2.3.57/ibex-lib-$env:IBEX_FILES.zip", 'C:\projects\pyIbex\ibex-lib.zip')
 
-      ls C:\projects\ibex-geometry
+      ls C:\projects\pyIbex
 
-      cd C:\projects\ibex-geometry
+      cd C:\projects\pyIbex
 
-      7z x -tzip -oC:"ibex-lib" "C:\projects\ibex-geometry\ibex-lib.zip"
+      7z x -tzip -oC:"ibex-lib" "C:\projects\pyIbex\ibex-lib.zip"
 
-      ls C:\projects\ibex-geometry\ibex-lib
-  # - cmd: "%PYTHON_DIR%/python.exe -m pip install twine"
+      ls C:\projects\pyIbex\ibex-lib
+  - cmd: "%PYTHON_DIR%/python.exe -m pip install twine pyibex"
 
 artifacts:
   - path: '**\*.whl'
     name: pip_wheel
 
 build_script:
-  #- echo Running cmake..  .
-  - cd c:\projects\ibex-geometry
+  - echo Running cmake..  .
+  - cd c:\projects\pyIbex
   - git submodule init
   - git submodule update
-  - mkdir build
-  - cd build
+  # - git clone -b build_process https://github.com/benEnsta/ibex-robotics.git ibex-robotics
+
+  - cmake -G "%CMAKE_PLATFORM%" -DPYTHON_INCLUDE_DIR:PATH=%PYTHON_DIR%/include -DPYTHON_EXECUTABLE:FILEPATH=%PYTHON_DIR%/python.exe -DIBEX_ROOT=C:\projects\pyIbex\ibex-lib\ibex-lib-"%IBEX_FILES%"
   - set MSBuildLogger="C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - set MSBuildOptions=/v:m /p:Configuration=%Configuration% /logger:%MSBuildLogger%
-  - cmake -G "%CMAKE_PLATFORM%"  -DWITH_PYTHON=OFF -DIBEX_ROOT=C:\projects\ibex-geometry\ibex-lib\ibex-lib-"%IBEX_FILES%" ..
   - msbuild %MSBuildOptions% INSTALL.vcxproj
   - ctest -C %Configuration%
-  # - git clone -b build_process https://github.com/benEnsta/ibex-robotics.git ibex-robotics
-  #- cmake -G "%CMAKE_PLATFORM%" -DPYTHON_INCLUDE_DIR:PATH=%PYTHON_DIR%/include -DPYTHON_LIBRARY:FILEPATH=%PYTHON_DIR%/libs/python34.lib -DPYTHON_EXECUTABLE:FILEPATH=%PYTHON_DIR%/python.exe -DIBEX_ROOT=C:\projects\ibex-geometry\ibex-lib\ibex-lib-2.3.0-win64
-  #- set MSBuildLogger="C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-  #- set MSBuildOptions=/v:m /p:Configuration=%Configuration% /logger:%MSBuildLogger%
-  #- msbuild %MSBuildOptions% INSTALL.vcxproj
-  #- ctest -C %Configuration%
-  #- msbuild %MSBuildOptions% src/pip_package.vcxproj
-  # - "build.cmd %PYTHON%\\python.exe setup.py build_ext -I C:\\projects\\ibex-geometry\\ibex-lib\\ibex-lib-2.3.0-win64\\include:C:\\projects\\ibex-geometry\\ibex-lib\\ibex-lib-2.3.0-win64\\include\\ibex -L C:\\projects\\ibex-geometry\\ibex-lib\\ibex-lib-2.3.0-win64\\lib"
+  - msbuild %MSBuildOptions% src/pip_package.vcxproj
+  # - msbuild %MSBuildOptions% src/install_python.vcxproj
 
-test_script:
-  # Put your test command here.
-  # If you don't need to build C extensions on 64-bit Python 3.3 or 3.4,
-  # you can remove "build.cmd" from the front of the command, as it's
-  # only needed to support those cases.
-  # Note that you must use the environment variable %PYTHON% to refer to
-  # the interpreter you're using - Appveyor does not do anything special
-  # to put the Python evrsion you want to use on PATH.
-  - cmake --build . --target test -- ARGS="-VV"
-  # - "build.cmd %PYTHON%\\python.exe setup.py test"
+deploy:
+  provider: FTP
+  protocol: ftps
+  host: bdesroch.homenet.org
+  username: git
+  password:
+    secure: U58Tazcrcj6n+oP1CxfRCQ==
+  folder: gittmp/win
+  artifact: pip_wheel
 
-
-# after_test:
-  # This step builds your wheels.
-  # Again, you only need build.cmd if you're building C extensions for
-  # 64-bit Python 3.3/3.4. And you need to use %PYTHON% to get the correct
-  # interpreter
-  # - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
-
+#
+#
 # deploy:
-#   release: ibex-geometry-v$(appveyor_build_version)
-#   description: 'pyIbex geometry build'
-#   provider: GitHub
+#
+# - provider: GitHub
+#
 #   auth_token:
-#     secure: kfuelei+usQrQv/IZnoepVAx6SU1E8BKoR6rXwXM3grYnvzBQM2P9xMKQ+Nc+BYr
+#
+#     secure: wIeJZ9xcTslfsgvqCGez8oOC0YxhmM8LI0iJ7gBgsI7ykVeWWLEFfAQSIHgbac6k
+#
 #   artifact: pip_wheel
+#
 #   draft: true
-#   prerelease: false
-#   on:
-#     branch: master      # release from master branch only
-#     appveyor_repo_tag: false        # deploy on tag push only
-
-
-
-
-# curl -L "https://github.com/benEnsta/ibex-lib/releases/download/ibex-lib-v2.1.17/ibex-lib-2.1.12-win64.exe" -o "C:\projects\ibex-geometry\ibex-lib.exe"
-# ls C:\projects\pyIbex
-# cd C:\projects\pyIbex
-# ibex-lib.exe /D="C:\projects\pyIbex"
-# ls "C:\projects\pyIbex"
-
-# curl -L "https://github.com/benEnsta/ibex-lib/releases/download/ibex-lib-v2.1.17/ibex-lib-2.1.12-win64.zip" -o "C:\projects\pyIbex\ibex-lib.zip"
-# ls C:\projects\pyIbex
-# 7z x -tzip -oC:"C:\projects\pyIbex\ibex-lib" "C:\projects\pyIbex\ibex-lib.zip"
-# ls C:\projects\pyIbex\ibex-lib
+#   appveyor_repo_tag: true        # deploy on tag push only

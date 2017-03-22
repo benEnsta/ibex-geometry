@@ -56,14 +56,14 @@ protected:
 inline Interval Cmod(const Interval& x, const Interval& y){
   Interval xx(x);
   Interval yy(y);
-  bwd_imod(xx,yy,2*0x1.921fb54442d18p+1f);
+  bwd_imod(xx,yy,2*Interval::PI.ub());
   return yy;
 }
 
 inline Interval Cmod_bwd(const Interval& x, const Interval& y){
   Interval xx(x);
   Interval yy(y);
-  bwd_imod(xx,yy,2*0x1.921fb54442d18p+1f);
+  bwd_imod(xx,yy,2*Interval::PI.ub());
   return xx;
 }
 
