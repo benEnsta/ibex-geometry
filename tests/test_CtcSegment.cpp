@@ -10,10 +10,10 @@
  * ---------------------------------------------------------------------------- */
 
 #define CATCH_CONFIG_MAIN
+#include "ibex_CtcSegment.h"
 #include "catch.hpp"
 #include "catch_interval.hpp"
 
-#include "ibex_CtcSegment.h"
 
 // using namespace std;
 using namespace ibex;

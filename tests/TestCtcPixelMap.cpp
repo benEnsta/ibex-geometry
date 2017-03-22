@@ -315,5 +315,3 @@ void TestCtcPixelMap::test2d_corner(){
 //}
 
 }
-
-

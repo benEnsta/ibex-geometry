@@ -9,11 +9,11 @@
 
 
 #define CATCH_CONFIG_MAIN
+#include "ibex_SepPolygon.h"
 #include "catch.hpp"
 #include "catch_interval.hpp"
 // #include "vibes/vibes.h"
 
-#include "ibex_SepPolygon.h"
 
 #define BUFFER_SIZE 512
 
