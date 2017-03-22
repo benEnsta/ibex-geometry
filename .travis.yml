@@ -88,9 +88,11 @@ before_install:
     if [ "${PYTHON:0:1}" = "3" ]; then export PY=3; fi
     if [ "$TRAVIS_OS_NAME" = "linux" ]; then
         if [ "$PY" = "3" ]; then
-          pip install --upgrade pip auditwheel twine pyibex;
+          pip install --upgrade pip;
+          pip install auditwheel twine pyibex;
         else
-          pip install --user --upgrade pip auditwheel twine pyibex;
+          pip install --user --upgrade pip;
+          pip install --user auditwheel twine pyibex;
         fi
     elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
       if [ "$PY" = "3" ]; then

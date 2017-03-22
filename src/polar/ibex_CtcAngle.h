@@ -97,7 +97,7 @@ inline std::tuple<Interval, Interval, Interval> Catan2(const Interval&x, const I
     // cout << "XX " << xx << " " << tanTh << y/tanTh << "\n";
     // cout << "YY " << yy << " " << tanTh << x*tanTh << "\n";
     // cout << "TH " << th << " " <<  thr << " " << th_tmp << atan(y/x) << "\n";
-    if (xx.is_empty() or yy.is_empty() or thr.is_empty() ){
+    if (xx.is_empty() || yy.is_empty() || thr.is_empty() ){
       return std::make_tuple(Interval::EMPTY_SET, Interval::EMPTY_SET, Interval::EMPTY_SET);
     }
 
