@@ -31,7 +31,7 @@ ADD_TEST(NAME python_module
       WORKING_DIRECTORY ${PYTHON_PACKAGE_DIR}
 )
 
-install( DIRECTORY "${PYTHON_PACKAGE_DIR}/pyibex_geometry" DESTINATION "${PYTHON_INSTDIR}")
+# install( DIRECTORY "${PYTHON_PACKAGE_DIR}/pyibex_geometry" DESTINATION "${PYTHON_INSTDIR}")
 
 add_custom_target(pip_package)
 add_custom_command(TARGET pip_package PRE_BUILD

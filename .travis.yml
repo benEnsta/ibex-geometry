@@ -104,6 +104,8 @@ before_install:
       pip$PY install --user --upgrade pip virtualenv auditwheel twine pyibex;
       python$PY -m virtualenv venv;
       source venv/bin/activate;
+      pip install  --upgrade pip;
+      pip install auditwheel twine pyibex;
     fi
 
 
@@ -119,7 +121,7 @@ script:
   - cmake -DCMAKE_INSTALL_PREFIX=${HOME} -DIBEX_ROOT=${HOME}/ibex -DPYTHON_VERSION=${version} -DPYBIND11_PYTHON_VERSION=$PYTHON -DPYBIND11_CPP_STANDARD=$CPP ../ ;
   - make
 
-  - make test
+  - make test ARGS="-VV"
   - make pip_package
   - export wheel_file=$(ls *.whl)
   # - if [  $TRAVIS_OS_NAME == linux ]; then
